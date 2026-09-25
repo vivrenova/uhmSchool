@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import MailView from '../components/islands/MailView';
+import { SCHOOL } from '../config/school';
+
+const ssrNow = Date.now();
+---
+
+<Base title={`Лист учню — ${SCHOOL.name}`} noindex>
+  <PageHeader />
+  <main class="wrap" style="padding-block: 24px 72px">
+    <MailView client:only="preact" ssrNow={ssrNow} />
+  </main>
+</Base>

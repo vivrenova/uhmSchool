@@ -1,0 +1,104 @@
+/* Модальне вікно: на телефоні — нижній лист, на десктопі — по центру. */
+.wl {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100dvh;
+  margin: auto 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.wl::backdrop {
+  background: rgba(24, 23, 21, 0.55);
+}
+.wl__box {
+  position: relative;
+  max-height: 92dvh;
+  overflow-y: auto;
+  padding: 28px var(--gutter) max(24px, env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0;
+  background: var(--paper);
+}
+.wl[open] .wl__box {
+  animation: wl-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes wl-up {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+.wl__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--paper-2);
+}
+.wl__close svg {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.wl__form,
+.wl__done {
+  display: grid;
+  gap: 18px;
+}
+.wl__title {
+  display: grid;
+  gap: 2px;
+  padding-right: 48px;
+  font-size: 30px;
+}
+.wl__title span {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--ink-3);
+  letter-spacing: -0.01em;
+}
+.wl__text {
+  color: var(--ink-2);
+}
+.wl__num {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 0 0 12px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1;
+}
+.wl__numcap {
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink-3);
+}
+.nowrap {
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .wl {
+    max-width: 480px;
+    margin: auto;
+  }
+  .wl__box {
+    border-radius: 22px;
+    padding: 32px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wl[open] .wl__box {
+    animation: none;
+  }
+}

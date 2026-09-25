@@ -1,0 +1,181 @@
+.ok {
+  display: grid;
+  gap: 28px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.ok--loading {
+  min-height: 80dvh;
+}
+.ok__hero {
+  display: grid;
+  gap: 6px;
+}
+.ok__tick {
+  width: 72px;
+  height: 54px;
+  margin-bottom: 6px;
+  overflow: visible;
+}
+.ok__tick path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 90;
+  stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ok__tick path {
+    animation: tick-draw 0.6s cubic-bezier(0.65, 0.05, 0.36, 1) 0.2s both;
+  }
+}
+@keyframes tick-draw {
+  from {
+    stroke-dashoffset: 90;
+  }
+}
+.ok__h {
+  font-size: clamp(40px, 10vw, 72px);
+}
+.ok__lead {
+  font-size: 19px;
+  color: var(--ink-2);
+}
+.ok__order {
+  color: var(--ink-3);
+}
+
+.ok__access {
+  display: grid;
+  gap: 14px;
+  padding: 22px 18px;
+  border-radius: 20px;
+  background: var(--ink);
+  color: #e8e2d6;
+}
+.ok__access b {
+  color: var(--paper);
+  font-weight: 600;
+}
+.ok__h2 {
+  font-size: 26px;
+  letter-spacing: -0.015em;
+}
+.ok__access .ok__h2 {
+  color: var(--paper);
+}
+.ok__mail a {
+  color: var(--paper);
+  font-weight: 600;
+}
+.ok__next {
+  padding-top: 12px;
+  border-top: 1px solid #4a463f;
+  color: #cfc8bb;
+}
+
+.ok__steps ol {
+  list-style: none;
+  counter-reset: s;
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.ok__steps li {
+  counter-increment: s;
+  position: relative;
+  padding-left: 40px;
+}
+.ok__steps li::before {
+  content: counter(s);
+  position: absolute;
+  left: 0;
+  top: -2px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.ok__behind {
+  display: grid;
+  gap: 14px;
+  padding: 20px 16px;
+  border: 2px dashed var(--line);
+  border-radius: 20px;
+}
+.ok__behind .btn {
+  justify-self: start;
+}
+.ok__demo {
+  justify-self: start;
+  padding: 2px 10px;
+  border-radius: 8px;
+  background: var(--marker);
+  font-size: 16px;
+  font-weight: 600;
+}
+.ok__behind-grid {
+  display: grid;
+  gap: 16px;
+}
+.ok__fig {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.ok__fig figcaption {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.ok__chat {
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: #dfe6d3;
+}
+.ok__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid #2f8a3f;
+  font-size: 15px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.ok__row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ok__row-sum {
+  font-weight: 700;
+}
+.ok__small {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+
+@media (min-width: 720px) {
+  .ok__access {
+    padding: 32px;
+  }
+  .ok__access .btn {
+    max-width: 360px;
+  }
+  .ok__behind {
+    padding: 28px;
+  }
+  .ok__behind-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}

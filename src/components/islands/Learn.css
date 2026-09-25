@@ -1,0 +1,189 @@
+.learn {
+  display: grid;
+  gap: 32px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.learn--loading {
+  min-height: 80dvh;
+}
+.learn__sample {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--marker);
+}
+.learn__sample a {
+  font-weight: 600;
+}
+.learn__head {
+  display: grid;
+  gap: 6px;
+}
+.learn__h {
+  font-size: clamp(32px, 8vw, 52px);
+}
+.learn__group {
+  color: var(--ink-2);
+}
+.learn__h2 {
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.learn__h2 span {
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink-3);
+  letter-spacing: 0;
+}
+.learn__muted {
+  color: var(--ink-3);
+}
+
+.learn__next {
+  display: grid;
+  gap: 6px;
+  padding: 22px 18px;
+  border-radius: 20px;
+  background: var(--ink);
+  color: #e8e2d6;
+}
+.learn__next .learn__h2 {
+  color: var(--paper);
+  margin: 0;
+}
+.learn__next .learn__muted {
+  color: #b9b2a6;
+}
+.learn__count {
+  font-family: var(--font-hand);
+  font-weight: 600;
+  font-size: 28px;
+  color: var(--red-on-ink);
+}
+.learn__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.learn__ghost {
+  color: var(--paper);
+  border-color: #6b655b;
+}
+.learn__ghost:hover {
+  background: #2b2925;
+}
+
+.learn__todo ul {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.todo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 12px;
+  align-items: start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+  cursor: pointer;
+}
+.todo input {
+  position: absolute;
+  opacity: 0;
+  inset: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.todo:has(input:focus-visible) {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+.todo__box {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--ink-3);
+  border-radius: 7px;
+}
+.todo:has(input:checked) .todo__box::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: -4px;
+  width: 22px;
+  height: 11px;
+  border-left: 3px solid var(--red);
+  border-bottom: 3px solid var(--red);
+  transform: rotate(-48deg);
+}
+.todo:has(input:checked) .todo__title {
+  text-decoration: line-through;
+  text-decoration-color: var(--red);
+  text-decoration-thickness: 2px;
+}
+.todo__title {
+  display: block;
+  font-weight: 600;
+}
+.todo__note {
+  display: block;
+  font-size: 16px;
+  color: var(--ink-3);
+}
+
+.learn__weeks {
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+.learn__weeks li {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-3);
+}
+.learn__weeks li.is-open {
+  color: var(--ink);
+}
+.learn__wnum {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+}
+.learn__weeks li.is-open .learn__wnum {
+  color: var(--red);
+}
+.learn__wtxt {
+  display: grid;
+}
+.learn__wtxt span {
+  font-size: 16px;
+}
+.learn__lock {
+  font-size: 16px;
+  color: var(--red);
+  font-weight: 600;
+}
+
+.learn__pay {
+  display: grid;
+  gap: 8px;
+  padding: 18px;
+}
+.learn__pay .learn__h2 {
+  margin: 0;
+}
+
+@media (min-width: 720px) {
+  .learn__next {
+    padding: 32px;
+  }
+}

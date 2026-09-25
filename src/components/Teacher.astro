@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import teacherMug from '../assets/photos/teacher-mug.jpg';
+import { TEACHER } from '../config/school';
+
+const facts = [
+  { k: 'CELTA', v: 'Cambridge, 2019' },
+  { k: 'IELTS 8.5', v: 'speaking — 9.0, 2022 рік' },
+  { k: 'Единбург', v: '2 роки: бариста, потім менеджерка в турагенції' },
+  { k: 'Цей курс', v: 'веде з 2023-го, зараз — 11-й потік' },
+];
+---
+
+<section class="teacher section" id="teacher" aria-labelledby="teacher-title">
+  <div class="wrap teacher__grid">
+    <figure class="teacher__photo">
+      <Image
+        src={teacherMug}
+        alt={`${TEACHER.firstName} ${TEACHER.lastName} з чашкою чаю на дивані`}
+        widths={[360, 540, 720, 960, 1200]}
+        sizes="(min-width: 960px) 46vw, 100vw"
+        loading="lazy"
+        format="webp"
+        quality={70}
+      />
+    </figure>
+
+    <div class="teacher__text">
+      <p class="eyebrow">Викладачка</p>
+      <h2 id="teacher-title" class="h2">{TEACHER.firstName} {TEACHER.lastName}</h2>
+      <p class="lead">
+        Вчила англійську у звичайній школі в Житомирі й до двадцяти років соромилась говорити. Тому знає, звідки береться «uhm»,
+        і не зупиняє вас посеред речення.
+      </p>
+
+      <dl class="teacher__facts">
+        {
+          facts.map((f) => (
+            <div>
+              <dt>{f.k}</dt>
+              <dd>{f.v}</dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <blockquote class="teacher__quote">
+        <p>
+          «Я записую помилки, поки ви говорите, і розбираю їх наприкінці заняття. Якщо перебивати на кожному слові, людина
+          швидко вчиться одного — мовчати».
+        </p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<style>
+  .teacher__grid {
+    display: grid;
+    gap: 32px;
+  }
+  .teacher__photo {
+    margin: 0;
+  }
+  .teacher__photo :global(img) {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: 50% 30%;
+    border-radius: 16px;
+  }
+  .teacher__text .eyebrow {
+    margin-bottom: 12px;
+  }
+  .teacher__text .lead {
+    margin-top: 18px;
+    max-width: 34em;
+  }
+  .teacher__facts {
+    margin: 28px 0 0;
+    display: grid;
+    border-top: 2px solid var(--ink);
+  }
+  .teacher__facts div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 12px;
+    padding-block: 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .teacher__facts dt {
+    font-weight: 600;
+  }
+  .teacher__facts dd {
+    margin: 0;
+    color: var(--ink-2);
+  }
+  .teacher__quote {
+    margin: 32px 0 0;
+    padding-left: 20px;
+    border-left: 3px solid var(--red);
+  }
+  .teacher__quote p {
+    font-family: var(--font-text);
+    font-weight: 600;
+    font-size: 21px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  @media (min-width: 960px) {
+    .teacher__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 64px;
+      align-items: center;
+    }
+    .teacher__photo :global(img) {
+      aspect-ratio: 4 / 5;
+      border-radius: 20px;
+    }
+    .teacher__facts div {
+      grid-template-columns: 150px 1fr;
+    }
+    .teacher__quote p {
+      font-size: 24px;
+    }
+  }
+</style>

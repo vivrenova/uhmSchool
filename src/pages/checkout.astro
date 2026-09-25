@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Checkout from '../components/islands/Checkout';
+import Waitlist from '../components/islands/Waitlist';
+import { COURSE, SCHOOL } from '../config/school';
+
+const ssrNow = Date.now();
+---
+
+<Base title={`Бронювання місця — ${COURSE.title} — ${SCHOOL.name}`} noindex>
+  <PageHeader backHref="/#prices" />
+  <main class="wrap page-pad">
+    <h1 class="page-title">Бронювання місця</h1>
+    <Checkout client:load ssrNow={ssrNow} />
+  </main>
+  <Waitlist client:idle ssrNow={ssrNow} />
+</Base>
+
+<style>
+  .page-pad {
+    padding-block: 24px 64px;
+  }
+  .page-title {
+    font-size: clamp(34px, 8vw, 56px);
+    margin-bottom: 24px;
+  }
+</style>

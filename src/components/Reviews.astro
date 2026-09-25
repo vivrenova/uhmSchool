@@ -1,0 +1,361 @@
+---
+import { REVIEWS } from '../content/reviews';
+
+const wave = Array.from({ length: 24 }, (_, i) => 3 + Math.round(Math.abs(Math.sin(i * 1.9) * 8 + Math.cos(i * 0.5) * 4)));
+const src = { tg: 'Telegram', 'tg-group': 'Telegram', 'ig-reply': 'Instagram', 'ig-dm': 'Instagram' } as const;
+---
+
+<section class="reviews section" id="reviews" aria-labelledby="reviews-title">
+  <div class="wrap">
+    <div class="reviews__head">
+      <p class="eyebrow">Відгуки</p>
+      <h2 id="reviews-title" class="h2">Що пишуть учні — без редагування</h2>
+      <p class="lead">Скріни з хайлайту «Відгуки» в Instagram школи. Орфографію авторів збережено.</p>
+    </div>
+  </div>
+
+  <ul class="shots" role="list">
+    {
+      REVIEWS.map((r) => (
+        <li class="shot-wrap">
+          <figure class="shot">
+            <div class:list={['shot__screen', r.kind.startsWith('ig') ? 'is-ig' : 'is-tg']}>
+              <span class="sr-only">Скрін з {src[r.kind]}:</span>
+
+              {r.kind === 'tg' && (
+                <>
+                  <div class="tg__head" aria-hidden="true">
+                    <span class="ava" style={`background:${r.color}`}>{r.initials}</span>
+                    <span class="tg__who">
+                      <b>{r.name}</b>
+                      <span>{r.seen}</span>
+                    </span>
+                  </div>
+                  <div class="tg__body">
+                    {r.bubbles.map((b) =>
+                      'voice' in b ? (
+                        <p class="bub">
+                          <span class="voice" role="img" aria-label={`Голосове повідомлення, ${b.voice}`}>
+                            <span class="voice__play" aria-hidden="true" />
+                            <span class="voice__wave" aria-hidden="true">
+                              {wave.map((h) => (
+                                <i style={`height:${h}px`} />
+                              ))}
+                            </span>
+                            <span class="voice__len" aria-hidden="true">
+                              {b.voice}
+                            </span>
+                          </span>
+                          <span class="bub__time" aria-hidden="true">
+                            {b.time}
+                          </span>
+                        </p>
+                      ) : (
+                        <p class="bub">
+                          {b.text}
+                          <span class="bub__time" aria-hidden="true">
+                            {b.time}
+                          </span>
+                        </p>
+                      ),
+                    )}
+                  </div>
+                </>
+              )}
+
+              {r.kind === 'tg-group' && (
+                <>
+                  <div class="tg__head" aria-hidden="true">
+                    <span class="ava ava--school">u.</span>
+                    <span class="tg__who">
+                      <b>{r.chat}</b>
+                      <span>8 учасників</span>
+                    </span>
+                  </div>
+                  <div class="tg__body">
+                    <p class="bub">
+                      <b class="bub__name" style={`color:${r.color}`}>
+                        {r.name}
+                      </b>
+                      {r.text}
+                      <span class="bub__time" aria-hidden="true">
+                        {r.time}
+                      </span>
+                    </p>
+                    <span class="bub__reaction" role="img" aria-label="6 реакцій «оплески»">
+                      {r.reaction}
+                    </span>
+                  </div>
+                </>
+              )}
+
+              {r.kind === 'ig-reply' && (
+                <>
+                  <div class="ig__head" aria-hidden="true">
+                    <span class="ava ava--ig">{r.initials}</span>
+                    <b>{r.name}</b>
+                  </div>
+                  <div class="ig__body">
+                    <span class="ig__label">Відповідь на вашу історію</span>
+                    <span class="ig__story" aria-hidden="true">
+                      {r.story}
+                    </span>
+                    <p class="ig__bub">{r.text}</p>
+                  </div>
+                </>
+              )}
+
+              {r.kind === 'ig-dm' && (
+                <>
+                  <div class="ig__head" aria-hidden="true">
+                    <span class="ava ava--ig">{r.initials}</span>
+                    <b>{r.name}</b>
+                  </div>
+                  <div class="ig__body">
+                    {r.texts.map((t) => (
+                      <p class="ig__bub">{t}</p>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+            <figcaption class="shot__cap">
+              {src[r.kind]} · {r.caption}
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .reviews {
+    background: var(--paper-2);
+  }
+  .reviews__head {
+    display: grid;
+    gap: 16px;
+    max-width: 760px;
+    margin-bottom: 36px;
+  }
+
+  /* Мобільний: горизонтальна стрічка з прокруткою. Десктоп: колонки. */
+  .shots {
+    list-style: none;
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    padding: 4px var(--gutter) 20px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+  }
+  .shot-wrap {
+    position: relative; /* тримає sr-only-підписи всередині стрічки, інакше сторінка стає ширшою */
+    flex: 0 0 min(86vw, 340px);
+    scroll-snap-align: start;
+  }
+  .shot {
+    margin: 0;
+  }
+  .shot__screen {
+    border-radius: 18px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.35;
+    box-shadow: 0 10px 30px -18px rgba(24, 23, 21, 0.5);
+  }
+  .shot__cap {
+    margin-top: 10px;
+    font-size: 16px;
+    color: var(--ink-3);
+  }
+
+  .ava {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .ava--school {
+    background: #181715;
+    color: #f4f0e8;
+    font-weight: 800;
+  }
+  .ava--ig {
+    background: linear-gradient(135deg, #6b5b4e, #3a332d);
+    font-size: 13px;
+  }
+
+  /* Telegram (світла тема) */
+  .is-tg {
+    background: #dfe6d3;
+    color: #111;
+  }
+  .tg__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #fbfbf8;
+    border-bottom: 1px solid #e3e3dc;
+  }
+  .tg__who {
+    display: grid;
+    font-size: 15px;
+  }
+  .tg__who span {
+    font-size: 13px;
+    color: #66665f;
+  }
+  .tg__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 14px 10px 16px;
+  }
+  .bub {
+    position: relative;
+    max-width: 92%;
+    padding: 7px 12px 20px;
+    border-radius: 16px 16px 16px 5px;
+    background: #fff;
+  }
+  .bub__name {
+    display: block;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+  .bub__time {
+    position: absolute;
+    right: 10px;
+    bottom: 4px;
+    font-size: 12px;
+    color: #66665f;
+  }
+  .bub__reaction {
+    margin-left: 6px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: rgba(59, 130, 196, 0.16);
+    color: #1f4f80;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .voice {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 34px;
+  }
+  .voice__play {
+    position: relative;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #3b82c4;
+  }
+  .voice__play::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    border-left: 11px solid #fff;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+  }
+  .voice__wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 24px;
+  }
+  .voice__wave i {
+    display: block;
+    width: 2.5px;
+    border-radius: 2px;
+    background: #7aa7cf;
+  }
+  .voice__len {
+    font-size: 13px;
+    color: #66665f;
+  }
+
+  /* Instagram (темна тема) */
+  .is-ig {
+    background: #000;
+    color: #f5f5f5;
+  }
+  .ig__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid #262626;
+    font-size: 15px;
+  }
+  .ig__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px 12px 18px;
+  }
+  .ig__label {
+    font-size: 13px;
+    color: #a8a8a8;
+  }
+  .ig__story {
+    display: grid;
+    align-items: end;
+    width: 108px;
+    height: 176px;
+    padding: 10px;
+    border-radius: 12px;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.65)),
+      linear-gradient(160deg, #c8322a, #6b1f1a 55%, #1f1b17);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    opacity: 0.9;
+  }
+  .ig__bub {
+    max-width: 88%;
+    padding: 9px 14px;
+    border-radius: 20px;
+    background: #262626;
+  }
+
+  @media (min-width: 900px) {
+    .shots {
+      display: block;
+      columns: 3;
+      column-gap: 24px;
+      overflow: visible;
+      padding: 0 var(--gutter);
+      max-width: calc(var(--max) + 2 * var(--gutter));
+      margin-inline: auto;
+    }
+    .shot-wrap {
+      break-inside: avoid;
+      margin-bottom: 28px;
+    }
+    .shot-wrap:nth-child(3n + 2) .shot__screen {
+      transform: rotate(-0.8deg);
+    }
+    .shot-wrap:nth-child(3n) .shot__screen {
+      transform: rotate(0.6deg);
+    }
+  }
+</style>

@@ -1,0 +1,100 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Lesson from '../components/Lesson.astro';
+import Homework from '../components/Homework.astro';
+import Teacher from '../components/Teacher.astro';
+import Reviews from '../components/Reviews.astro';
+import Prices from '../components/Prices.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+import HeroOffer from '../components/islands/HeroOffer';
+import Program from '../components/islands/Program';
+import StickyCta from '../components/islands/StickyCta';
+import Waitlist from '../components/islands/Waitlist';
+import teacherSofa from '../assets/photos/teacher-sofa.jpg';
+import { COURSE, SCHOOL, TEACHER } from '../config/school';
+
+// Момент збірки: з ним статичний HTML збігається з першим рендером островів.
+const ssrNow = Date.now();
+---
+
+<Base
+  title={`${COURSE.title} за ${COURSE.weeks} тижнів — ${SCHOOL.name}`}
+  description={`${COURSE.lessons} занять у Zoom, група до ${COURSE.groupSize} людей. Веде ${TEACHER.firstName} ${TEACHER.lastName}, CELTA, IELTS 8.5.`}
+>
+  <Header />
+
+  <main>
+    <section class="hero" aria-label="Курс">
+      <div class="wrap">
+        <HeroOffer client:load ssrNow={ssrNow}>
+          <figure class="teacher-photo">
+            <Image
+              src={teacherSofa}
+              alt={`${TEACHER.firstName} ${TEACHER.lastName}, викладачка курсу, вдома на дивані`}
+              widths={[124, 180, 248, 360, 480, 720, 960]}
+              sizes="(min-width: 960px) 40vw, (min-width: 560px) 180px, 124px"
+              loading="eager"
+              fetchpriority="high"
+              format="webp"
+              quality={72}
+              class="teacher-photo__img"
+            />
+            <figcaption class="hand">
+              <span class="teacher-photo__cap-short">це {TEACHER.firstName}</span>
+              <span class="teacher-photo__cap-long">{TEACHER.firstName}, веде курс</span>
+            </figcaption>
+            <p class="teacher-photo__creds">CELTA · IELTS 8.5 · викладає з 2017</p>
+          </figure>
+        </HeroOffer>
+      </div>
+    </section>
+
+    <Lesson />
+    <Homework />
+
+    <section class="section" id="program" aria-labelledby="program-title">
+      <div class="wrap">
+        <div class="program-head">
+          <p class="eyebrow">Програма</p>
+          <h2 id="program-title" class="h2">{COURSE.weeks} тижнів, {COURSE.lessons} занять</h2>
+          <p class="lead">
+            Кожен тиждень — одна життєва ситуація. Граматику беремо тоді, коли вона потрібна для розмови, а не за підручником.
+          </p>
+        </div>
+        <Program client:idle ssrNow={ssrNow} />
+      </div>
+    </section>
+
+    <Teacher />
+    <Reviews />
+    <Prices ssrNow={ssrNow} />
+    <Faq />
+  </main>
+
+  <Footer />
+  <StickyCta client:idle ssrNow={ssrNow} />
+  <Waitlist client:idle ssrNow={ssrNow} />
+</Base>
+
+<style>
+  .hero {
+    padding-block: 20px 64px;
+  }
+  .program-head {
+    display: grid;
+    gap: 16px;
+    max-width: 760px;
+    margin-bottom: 36px;
+  }
+  .program-head .lead {
+    max-width: 34em;
+  }
+  @media (min-width: 960px) {
+    .hero {
+      padding-block: 28px 120px;
+    }
+  }
+</style>

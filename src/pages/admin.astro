@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Admin from '../components/islands/Admin';
+import { SCHOOL } from '../config/school';
+
+const ssrNow = Date.now();
+---
+
+<Base title={`Кабінет власника — ${SCHOOL.name}`} noindex>
+  <PageHeader backLabel="На сайт школи" />
+  <main class="wrap" style="padding-block: 24px 72px; max-width: 1400px">
+    <Admin client:only="preact" ssrNow={ssrNow} />
+  </main>
+</Base>

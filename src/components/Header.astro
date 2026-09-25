@@ -1,0 +1,82 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { href: '#lesson', label: 'Заняття' },
+  { href: '#program', label: 'Програма' },
+  { href: '#teacher', label: 'Викладачка' },
+  { href: '#reviews', label: 'Відгуки' },
+  { href: '#prices', label: 'Ціни' },
+  { href: '#faq', label: 'Питання' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <Logo withTagline />
+    <nav aria-label="Розділи сторінки">
+      <ul class="site-nav">
+        {
+          links.map((l) => (
+            <li class:list={[{ 'site-nav__item--mobile': l.href === '#program' || l.href === '#prices' }]}>
+              <a href={l.href}>{l.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: var(--header-h);
+    padding-block: 8px;
+  }
+  .site-header :global(.logo__tagline) {
+    display: none;
+  }
+  .site-nav {
+    display: flex;
+    list-style: none;
+    gap: 4px;
+  }
+  .site-nav li {
+    display: none;
+  }
+  .site-nav li.site-nav__item--mobile {
+    display: block;
+  }
+  .site-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 10px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .site-nav a:hover {
+    color: var(--ink);
+    background: var(--paper-2);
+  }
+  @media (min-width: 600px) {
+    .site-header :global(.logo__tagline) {
+      display: block;
+    }
+  }
+  @media (min-width: 900px) {
+    .site-nav li {
+      display: block;
+    }
+    .site-nav a {
+      padding-inline: 12px;
+    }
+  }
+</style>

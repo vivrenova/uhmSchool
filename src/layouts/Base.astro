@@ -1,0 +1,49 @@
+---
+import '../styles/global.css';
+import DemoBanner from '../components/DemoBanner.astro';
+import DemoPanel from '../components/islands/DemoPanel';
+import { SCHOOL } from '../config/school';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Сторінки кабінетів і чекауту не індексуємо. */
+  noindex?: boolean;
+  bodyClass?: string;
+  /** Сторінка «два екрани»: без демо-панелі (вона є в кожному з вікон). */
+  bare?: boolean;
+}
+
+const { title, description = 'Демо-сайт вигаданої школи розмовної англійської.', noindex = false, bodyClass = '', bare = false } = Astro.props;
+const ssrNow = Date.now();
+---
+
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#f4f0e8" />
+    <meta name="format-detection" content="telephone=no" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/FixelDisplay-ExtraBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/FixelText-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:site_name" content={SCHOOL.name} />
+  </head>
+  <body class={bodyClass}>
+    {
+      !bare && (
+        <DemoBanner>
+          <DemoPanel client:idle ssrNow={ssrNow} />
+        </DemoBanner>
+      )
+    }
+    <slot />
+  </body>
+</html>

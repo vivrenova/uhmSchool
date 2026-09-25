@@ -1,0 +1,30 @@
+---
+// Чесна плашка: люди, відгуки й оплати на сайті — вигадані.
+---
+
+<div class="demo-banner" role="note">
+  <div class="wrap demo-banner__inner">
+    <p><b>Демо:</b> школа вигадана, оплата тестова</p>
+    <slot />
+  </div>
+</div>
+
+<style>
+  .demo-banner {
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 16px;
+    line-height: 1.35;
+  }
+  .demo-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 44px;
+    padding-block: 8px;
+  }
+  .demo-banner b {
+    font-weight: 600;
+  }
+</style>

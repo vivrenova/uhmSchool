@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import { SCHOOL } from '../config/school';
+---
+
+<Base title={`Два екрани — ${SCHOOL.name}`} noindex bare bodyClass="split-body">
+  <header class="split__head">
+    <Logo />
+    <p class="split__hint">
+      <b>Ліворуч — телефон учня, праворуч — кабінет власника.</b> Натисніть «Забронювати», оплатіть тестовою карткою{' '}
+      <span class="tnum nowrap">4242 4242 4242 4242</span> (код з SMS — 1234) і дивіться праворуч.
+    </p>
+  </header>
+
+  <main class="split">
+    <div class="split__phone">
+      <iframe src="/" title="Сайт школи на телефоні учня" loading="eager"></iframe>
+    </div>
+    <div class="split__admin">
+      <iframe src="/admin" title="Кабінет власника школи" loading="eager"></iframe>
+    </div>
+  </main>
+
+  <div class="split__narrow">
+    <p>Режим «два екрани» потребує ширшого екрана. На телефоні відкрийте сайт і кабінет власника в різних вкладках:</p>
+    <p><a class="btn btn--block" href="/">Сайт школи</a></p>
+    <p><a class="btn btn--ghost btn--block" href="/admin">Кабінет власника</a></p>
+  </div>
+</Base>
+
+<style is:global>
+  .split-body {
+    background: #e2dccf;
+  }
+</style>
+
+<style>
+  .split__head {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 24px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .split__head :global(.logo) {
+    flex: none;
+    white-space: nowrap;
+  }
+  .split__hint {
+    font-size: 16px;
+    color: var(--ink-2);
+  }
+  .split {
+    display: none;
+  }
+  .split__narrow {
+    display: grid;
+    gap: 12px;
+    padding: 24px var(--gutter);
+  }
+  @media (min-width: 1100px) {
+    .split {
+      display: grid;
+      grid-template-columns: 400px minmax(0, 1fr);
+      gap: 28px;
+      height: calc(100dvh - 76px);
+      padding: 20px 24px;
+    }
+    .split__narrow {
+      display: none;
+    }
+    .split__phone {
+      align-self: center;
+      height: min(820px, 100%);
+      padding: 12px;
+      border-radius: 48px;
+      background: var(--ink);
+      box-shadow: 0 30px 60px -30px rgba(24, 23, 21, 0.6);
+    }
+    .split__phone iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 38px;
+      background: var(--paper);
+    }
+    .split__admin {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 20px 50px -30px rgba(24, 23, 21, 0.5);
+    }
+    .split__admin iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+</style>

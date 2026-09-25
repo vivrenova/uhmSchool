@@ -1,0 +1,435 @@
+.adm {
+  display: grid;
+  gap: 24px;
+}
+.adm__top {
+  display: grid;
+  gap: 12px;
+}
+.adm__h {
+  font-size: clamp(30px, 7vw, 48px);
+  margin-top: 6px;
+}
+.adm__live {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.adm__dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2f8a3f;
+  box-shadow: 0 0 0 4px rgba(47, 138, 63, 0.18);
+}
+
+.adm__kpi {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.adm__kpi div {
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--card);
+  border: 1px solid var(--line);
+}
+.adm__kpi dt {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.adm__kpi dd {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+.adm__kpi small {
+  font-family: var(--font-text);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0;
+  color: var(--ink-3);
+}
+.adm__price {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--paper-2);
+  color: var(--ink-2);
+}
+
+.adm__grid {
+  display: grid;
+  gap: 32px;
+}
+.adm__main {
+  display: grid;
+  gap: 36px;
+  min-width: 0;
+}
+.adm__h2 {
+  font-size: 24px;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.adm__muted {
+  color: var(--ink-3);
+}
+
+.adm__groups {
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+.adm__groups li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: 'name free' 'dots dots';
+  gap: 6px 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.adm__gname {
+  grid-area: name;
+  display: grid;
+}
+.adm__gname span {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.adm__groups .seats {
+  grid-area: dots;
+}
+.adm__gfree {
+  grid-area: free;
+  font-weight: 600;
+}
+.adm__gfree.is-full {
+  color: var(--red);
+}
+
+.adm__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-bottom: 12px;
+}
+.adm__bar .adm__h2 {
+  margin: 0;
+}
+.adm__tools {
+  display: flex;
+  gap: 8px;
+}
+.adm__select {
+  min-height: 48px;
+  padding: 0 36px 0 14px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--card)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23181715' stroke-width='2'/%3E%3C/svg%3E")
+    no-repeat right 14px center;
+  font-size: 16px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.adm__csv {
+  min-height: 48px;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+/* Таблиця оплат: на телефоні — картки, на десктопі — таблиця як у Google Sheets. */
+.adm__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+.adm__table thead {
+  display: none;
+}
+.adm__table tr {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 12px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+}
+.adm__table td {
+  display: block;
+  padding: 0;
+}
+.adm__table td::before {
+  content: none;
+}
+.adm__table td[data-label='Час'] {
+  grid-column: 1 / -1;
+  color: var(--ink-3);
+}
+.adm__table td[data-label='Email'] {
+  font-weight: 600;
+  word-break: break-all;
+}
+.adm__table td[data-label='Сума'] {
+  grid-row: 2;
+  grid-column: 2;
+  text-align: right;
+}
+.adm__table td[data-label='Телефон'],
+.adm__table td[data-label='Група'],
+.adm__table td[data-label='Оплата'] {
+  color: var(--ink-2);
+  grid-column: 1 / -1;
+}
+.adm__method {
+  display: block;
+  font-size: 15px;
+  color: var(--ink-3);
+}
+.adm__chip {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: var(--marker);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+.adm__table tr.is-new {
+  border-color: #d9c95a;
+}
+.is-fresh {
+  animation: row-flash 2.4s ease-out;
+}
+@keyframes row-flash {
+  0%,
+  30% {
+    background-color: #f7ec9f;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-fresh {
+    animation: none;
+    background-color: #fbf5cf;
+  }
+}
+
+.adm__wl {
+  list-style: none;
+  border-top: 2px solid var(--ink);
+}
+.adm__wl li {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 8px 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.adm__wlpos {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--ink-3);
+}
+.adm__wlwho {
+  display: grid;
+}
+.adm__wlwho span {
+  font-size: 16px;
+  color: var(--ink-3);
+}
+.adm__offer,
+.adm__offered {
+  grid-column: 2;
+  justify-self: start;
+}
+.adm__offer {
+  min-height: 44px;
+  padding: 6px 14px;
+  font-size: 16px;
+}
+.adm__offered {
+  font-weight: 600;
+  color: #2f6b3a;
+}
+
+/* Стрічка бота */
+.adm__phone {
+  border-radius: 22px;
+  overflow: hidden;
+  background: #dfe6d3;
+  box-shadow: 0 0 0 6px var(--ink);
+  margin: 6px;
+}
+.adm__bothead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fbfbf8;
+  border-bottom: 1px solid #e3e3dc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+}
+.adm__bothead > span:last-child {
+  display: grid;
+}
+.adm__bothead > span:last-child span {
+  font-size: 13px;
+  color: #66665f;
+}
+.adm__botava {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 800;
+}
+.adm__botlist {
+  display: grid;
+  gap: 8px;
+  padding: 12px 10px 14px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+.adm__toast {
+  position: fixed;
+  z-index: 70;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: max(16px, env(safe-area-inset-bottom));
+  display: grid;
+  gap: 2px;
+  padding: 14px 48px 14px 16px;
+  border-radius: 14px;
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: 0 16px 40px -12px rgba(24, 23, 21, 0.5);
+  animation: bot-in 0.3s ease-out;
+}
+.adm__toast span {
+  color: #cfc8bb;
+  word-break: break-all;
+}
+.adm__toastx {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--paper);
+  font-size: 26px;
+  line-height: 1;
+}
+
+@media (min-width: 720px) {
+  .adm__kpi {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .adm__groups li {
+    grid-template-columns: 200px 1fr auto;
+    grid-template-areas: 'name dots free';
+  }
+  .adm__wl li {
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+  }
+  .adm__offer,
+  .adm__offered {
+    grid-column: 3;
+  }
+  .adm__toast {
+    left: auto;
+    width: 380px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .adm__top {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .adm__grid {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: start;
+  }
+  .adm__feed {
+    position: sticky;
+    top: 20px;
+  }
+  .adm__table thead {
+    display: table-header-group;
+  }
+  .adm__table tr {
+    display: table-row;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+  .adm__table th,
+  .adm__table td,
+  .adm__table td[data-label] {
+    display: table-cell;
+    padding: 10px 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+    color: inherit;
+    font-weight: 400;
+  }
+  .adm__table th {
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    white-space: nowrap;
+  }
+  .adm__table td[data-label='Час'],
+  .adm__table td[data-label='Телефон'],
+  .adm__table td[data-label='Група'] {
+    white-space: nowrap;
+  }
+  .adm__table td[data-label='Email'] {
+    max-width: 230px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: normal;
+  }
+  .adm__table .num {
+    text-align: right;
+    white-space: nowrap;
+  }
+  .adm__table tr.is-new td {
+    background: #fbf6d6;
+  }
+  .adm__chip {
+    display: block;
+    width: fit-content;
+    margin: 4px 0 0;
+    font-size: 13px;
+  }
+  .adm__tablewrap {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--card);
+  }
+}

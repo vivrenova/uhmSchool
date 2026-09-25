@@ -1,0 +1,88 @@
+---
+import Pricing from './islands/Pricing';
+import { COURSE, TEACHER } from '../config/school';
+
+interface Props {
+  ssrNow: number;
+}
+const { ssrNow } = Astro.props;
+
+const included = [
+  `${COURSE.lessons} занять у Zoom по ${COURSE.lessonMinutes} хвилин, група до ${COURSE.groupSize} людей`,
+  `щоденні голосові з правками від ${TEACHER.firstNameGen}`,
+  'запис кожного заняття й слайди в чаті групи',
+  'перехід в іншу групу, якщо пропускаєте заняття',
+  'доступ до записів ще 3 місяці після курсу',
+  'сертифікат про проходження курсу (PDF)',
+];
+---
+
+<section class="prices section" id="prices" aria-labelledby="prices-title">
+  <div class="wrap prices__grid">
+    <div class="prices__text">
+      <p class="eyebrow">Ціни</p>
+      <h2 id="prices-title" class="h2">Один курс, три способи оплатити</h2>
+      <p class="lead">Ціна однакова для всіх груп. Частинами — без переплати: другу частину або банківські платежі школа не збільшує.</p>
+
+      <h3 class="prices__sub">Що входить</h3>
+      <ul class="ticks">
+        {included.map((i) => <li>{i}</li>)}
+      </ul>
+
+      <div class="guarantee">
+        <p class="guarantee__title">Якщо не підійде</p>
+        <p>
+          Повертаємо всю суму, якщо напишете до {COURSE.refundUntilLesson}-го заняття. Пізніше — пропорційно заняттям, що
+          залишились. Гроші повертаються на ту саму картку протягом 3 робочих днів.
+        </p>
+      </div>
+    </div>
+
+    <Pricing client:visible ssrNow={ssrNow} />
+  </div>
+</section>
+
+<style>
+  .prices__grid {
+    display: grid;
+    gap: 36px;
+  }
+  .prices__text .eyebrow {
+    margin-bottom: 12px;
+  }
+  .prices__text .lead {
+    margin-top: 16px;
+    max-width: 32em;
+  }
+  .prices__sub {
+    margin-top: 32px;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .prices__sub + .ticks {
+    margin-top: 14px;
+  }
+  .guarantee {
+    margin-top: 32px;
+    padding: 18px 20px;
+    border: 2px dashed var(--red);
+    border-radius: 14px;
+    max-width: 34em;
+  }
+  .guarantee__title {
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .guarantee p:not(.guarantee__title) {
+    color: var(--ink-2);
+  }
+
+  @media (min-width: 960px) {
+    .prices__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 64px;
+      align-items: start;
+    }
+  }
+</style>

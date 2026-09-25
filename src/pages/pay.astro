@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import PayPage from '../components/islands/PayPage';
+import { SCHOOL } from '../config/school';
+---
+
+<Base title={`Оплата — ${SCHOOL.name}`} noindex bodyClass="pay-body">
+  <main class="wrap">
+    <PayPage client:only="preact" />
+  </main>
+</Base>
+
+<style is:global>
+  .pay-body {
+    background: #eceae5;
+  }
+</style>

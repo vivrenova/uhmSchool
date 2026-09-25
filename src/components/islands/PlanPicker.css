@@ -1,0 +1,98 @@
+/* Вибір способу оплати. Світла тема за замовчуванням, .plans--ink — для темної картки. */
+
+.plans {
+  --p-border: var(--line);
+  --p-border-hover: var(--ink-3);
+  --p-active-bg: var(--card);
+  --p-active: var(--ink);
+  --p-note: var(--ink-3);
+  --p-radio: var(--ink-3);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+.plans--ink {
+  --p-border: #4a463f;
+  --p-border-hover: #8a8378;
+  --p-active-bg: #24221f;
+  --p-active: var(--paper);
+  --p-note: #b9b2a6;
+  --p-radio: #8a8378;
+}
+.plans__legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.plans:disabled {
+  opacity: 0.45;
+}
+.plan {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 2px solid var(--p-border);
+  border-radius: 14px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.plan input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.plan:hover {
+  border-color: var(--p-border-hover);
+}
+.plan:has(input:checked) {
+  border-color: var(--p-active);
+  background: var(--p-active-bg);
+}
+.plan:has(input:focus-visible) {
+  outline: 3px solid var(--p-active);
+  outline-offset: 3px;
+}
+.plan__radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--p-radio);
+}
+.plan:has(input:checked) .plan__radio {
+  border: 7px solid var(--p-active);
+}
+.plan__txt {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 12px;
+  align-items: baseline;
+  min-width: 0;
+}
+.plan__title {
+  font-weight: 600;
+}
+.plan__note {
+  grid-column: 1 / -1;
+  font-size: 16px;
+  color: var(--p-note);
+}
+.plan__sum {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+  white-space: nowrap;
+}
+@media (min-width: 720px) {
+  .plan__sum {
+    font-size: 22px;
+  }
+}

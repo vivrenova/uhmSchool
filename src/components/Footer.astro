@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { SCHOOL } from '../config/school';
+import { AUTHOR } from '../config/author';
+
+const authorLinks: { href: string; label: string }[] = [];
+if (AUTHOR.telegram) authorLinks.push({ href: `https://t.me/${AUTHOR.telegram}`, label: 'Telegram' });
+if (AUTHOR.email) authorLinks.push({ href: `mailto:${AUTHOR.email}`, label: 'Пошта' });
+if (AUTHOR.github) authorLinks.push({ href: AUTHOR.github, label: 'GitHub' });
+---
+
+<footer class="footer on-ink">
+  <div class="wrap footer__grid">
+    <div class="footer__school">
+      <Logo />
+      <p>{SCHOOL.tagline}. Онлайн, групи до 8 людей.</p>
+      <p class="footer__contacts">
+        Telegram {SCHOOL.telegram}<br />
+        {SCHOOL.email}
+      </p>
+      <p class="footer__legal">ФОП Кравець Я. (вигаданий) · Публічна оферта і політика конфіденційності — у справжньому проєкті</p>
+    </div>
+
+    <div class="footer__demo">
+      <p class="footer__demo-title">Це демо</p>
+      <p>
+        Школа, люди, відгуки й оплати на сайті вигадані. Фото — з Unsplash. Сайт показує, як виглядатиме й працюватиме сторінка
+        курсу вашої школи: оплата, доступ, лист очікування, кабінет власника.
+      </p>
+      {
+        (AUTHOR.label || authorLinks.length > 0) && (
+          <p class="footer__author">
+            {AUTHOR.label && <span>{AUTHOR.label}</span>}
+            {authorLinks.map((l) => (
+              <a href={l.href} target={l.href.startsWith('http') ? '_blank' : undefined} rel="noopener">
+                {l.label}
+              </a>
+            ))}
+          </p>
+        )
+      }
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--ink);
+    color: #cfc8bb;
+    padding-block: 56px calc(56px + 76px);
+  }
+  .footer :global(.logo) {
+    color: var(--paper);
+  }
+  .footer__grid {
+    display: grid;
+    gap: 40px;
+  }
+  .footer__school {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+  .footer__contacts {
+    color: var(--paper);
+  }
+  .footer__legal {
+    font-size: 16px;
+    color: #a39c90;
+  }
+  .footer__demo {
+    display: grid;
+    gap: 10px;
+    padding: 20px;
+    border: 1px solid #4a463f;
+    border-radius: 16px;
+    align-content: start;
+  }
+  .footer__demo-title {
+    color: var(--paper);
+    font-weight: 600;
+  }
+  .footer__author {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 16px;
+    margin-top: 6px;
+    color: var(--paper);
+  }
+  .footer__author a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--paper);
+  }
+
+  @media (min-width: 960px) {
+    .footer {
+      padding-block: 72px;
+    }
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+    }
+  }
+</style>

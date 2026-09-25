@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Success from '../components/islands/Success';
+import { SCHOOL } from '../config/school';
+
+const ssrNow = Date.now();
+---
+
+<Base title={`Оплату отримано — ${SCHOOL.name}`} noindex>
+  <PageHeader />
+  <main class="wrap" style="padding-block: 28px 72px">
+    <Success client:only="preact" ssrNow={ssrNow} />
+  </main>
+</Base>

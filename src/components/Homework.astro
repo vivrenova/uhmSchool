@@ -1,0 +1,348 @@
+---
+import Pen from './Pen';
+import { HOMEWORK } from '../content/homework';
+import { TEACHER } from '../config/school';
+
+// Порядковий номер правки — для черговості анімації.
+let n = 0;
+const pieces = HOMEWORK.text.map((p) => (typeof p === 'string' ? p : { ...p, i: n++ }));
+
+// Хвиля голосового: детерміновані «випадкові» висоти стовпчиків.
+const bars = Array.from({ length: 34 }, (_, i) => 4 + Math.round(Math.abs(Math.sin(i * 1.7) * 9 + Math.sin(i * 0.6) * 5)));
+---
+
+<section class="hw section" id="homework" aria-labelledby="hw-title">
+  <div class="wrap">
+    <div class="hw__head">
+      <div>
+        <p class="eyebrow">Домашнє завдання</p>
+        <h2 id="hw-title" class="h2">Голосове щодня&nbsp;— правки за 24&nbsp;години</h2>
+      </div>
+      <p class="lead">
+        Після заняття в Telegram-боті з’являється тема для голосового до 2 хвилин. Бот розшифровує запис, {TEACHER.firstName}{' '}
+        править текст і повертає з коментарем. Ось як це виглядає на третьому тижні.
+      </p>
+    </div>
+
+    <article class="page" data-hw aria-labelledby="hw-task">
+      <header class="page__meta">
+        <p class="page__task" id="hw-task">
+          <span class="page__week">Тиждень {HOMEWORK.week}</span>
+          <span>«{HOMEWORK.task}»</span>
+        </p>
+        <p class="page__voice">
+          <span class="page__wave" aria-hidden="true">
+            {bars.map((h) => <i style={`height:${h}px`} />)}
+          </span>
+          <span class="tnum">{HOMEWORK.student} · голосове {HOMEWORK.duration}</span>
+        </p>
+      </header>
+
+      <p class="page__text" lang="en">
+        {
+          pieces.map((p) =>
+            typeof p === 'string' ? (
+              p
+            ) : (
+              <span class="fix" style={`--i:${p.i}`}>
+                <del>
+                  <Pen kind="strike" draw="toggle">
+                    {p.wrong}
+                  </Pen>
+                </del>
+                {p.fix && <ins class="fix__new hand">{p.fix}</ins>}
+              </span>
+            ),
+          )
+        }
+      </p>
+
+      <footer class="page__comment">
+        <p class="hand">{HOMEWORK.comment}</p>
+        <ul class="page__rules">
+          {HOMEWORK.rules.map((r) => <li>{r}</li>)}
+        </ul>
+      </footer>
+    </article>
+
+    <div class="hw__foot">
+      <button type="button" class="btn btn--ghost" data-hw-toggle aria-pressed="true">Сховати правки</button>
+      <dl class="hw__facts">
+        <div>
+          <dt>до 2 хв</dt>
+          <dd>голосове щодня в Telegram-боті</dd>
+        </div>
+        <div>
+          <dt>до 24 год</dt>
+          <dd>правки й коментар від {TEACHER.firstNameGen}</dd>
+        </div>
+        <div>
+          <dt>щоп’ятниці</dt>
+          <dd>розбір 5 найчастіших помилок групи</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Правки дорисовуються, коли сторінка зошита з’являється на екрані.
+  // Без JS або з prefers-reduced-motion — одразу показуємо виправлений варіант.
+  const page = document.querySelector<HTMLElement>('[data-hw]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-hw-toggle]');
+
+  function set(on: boolean) {
+    page?.classList.toggle('is-on', on);
+    toggle?.setAttribute('aria-pressed', String(on));
+    if (toggle) toggle.textContent = on ? 'Сховати правки' : 'Показати правки';
+  }
+
+  if (page && toggle) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && 'IntersectionObserver' in window) {
+      set(false);
+      const io = new IntersectionObserver(
+        ([e]) => {
+          if (e.isIntersecting) {
+            set(true);
+            io.disconnect();
+          }
+        },
+        { threshold: 0.45 },
+      );
+      io.observe(page);
+    } else {
+      set(true);
+    }
+    toggle.addEventListener('click', () => set(!page.classList.contains('is-on')));
+  }
+</script>
+
+<style>
+  .hw {
+    --cell: 24px;
+    --margin-x: 44px;
+    background-color: var(--card);
+    background-image:
+      linear-gradient(to right, rgba(76, 110, 140, 0.13) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(76, 110, 140, 0.13) 1px, transparent 1px);
+    background-size: var(--cell) var(--cell);
+    background-position: -1px -1px;
+    border-block: 1px solid var(--line);
+  }
+  .hw__head {
+    display: grid;
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  .hw__head .eyebrow {
+    margin-bottom: 12px;
+  }
+  .hw__head .lead {
+    max-width: 36em;
+  }
+
+  /* ——— Сторінка зошита ——— */
+
+  .page {
+    position: relative;
+    padding-left: calc(var(--margin-x) + 16px);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--margin-x);
+    width: 2px;
+    background: rgba(200, 50, 42, 0.55);
+  }
+  .page__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-block: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .page__task {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    font-weight: 600;
+  }
+  .page__week {
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .page__voice {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: var(--ink-3);
+  }
+  .page__wave {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 28px;
+  }
+  .page__wave i {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: var(--ink-3);
+    opacity: 0.7;
+  }
+
+  .page__text {
+    padding: 34px 8px 20px 0;
+    font-family: var(--font-text);
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 2.05;
+    letter-spacing: -0.01em;
+    max-width: 44ch;
+  }
+
+  .fix {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .fix del,
+  .fix ins {
+    text-decoration: none;
+  }
+  .fix :global(.pen__svg) {
+    transition-delay: calc(var(--i) * 160ms);
+  }
+  .fix__new {
+    position: absolute;
+    left: 50%;
+    bottom: 56%;
+    font-size: 26px;
+    white-space: nowrap;
+    transform: translateX(-50%) rotate(-3deg);
+    opacity: 0;
+    transition: opacity 0.3s ease calc(var(--i) * 160ms + 280ms);
+  }
+  .is-on .fix__new {
+    opacity: 1;
+  }
+
+  .page__comment {
+    padding: 16px 8px 24px 0;
+    border-top: 1px dashed var(--line);
+    display: grid;
+    gap: 16px;
+  }
+  .page__comment .hand {
+    font-size: 26px;
+    line-height: 1.2;
+    max-width: 30ch;
+    opacity: 0;
+    transform: rotate(-1.5deg);
+    transform-origin: left center;
+    transition: opacity 0.4s ease 1.3s;
+  }
+  .is-on .page__comment .hand {
+    opacity: 1;
+  }
+  .page__rules {
+    list-style: none;
+    display: grid;
+    gap: 6px;
+    font-size: 16px;
+    color: var(--ink-2);
+  }
+  .page__rules li {
+    position: relative;
+    padding-left: 18px;
+  }
+  .page__rules li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 2px;
+    background: var(--red);
+  }
+
+  .hw__foot {
+    display: grid;
+    gap: 32px;
+    margin-top: 28px;
+  }
+  .hw__foot .btn {
+    justify-self: start;
+  }
+  .hw__facts {
+    margin: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .hw__facts div {
+    display: grid;
+    gap: 2px;
+  }
+  .hw__facts dt {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .hw__facts dd {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  @media (min-width: 900px) {
+    .hw {
+      --margin-x: 72px;
+    }
+    .hw__head {
+      grid-template-columns: 1.1fr 1fr;
+      align-items: end;
+      gap: 48px;
+    }
+    .page__text {
+      font-size: 30px;
+      line-height: 2.1;
+      padding-top: 44px;
+    }
+    .fix__new {
+      font-size: 32px;
+    }
+    .page__comment {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: start;
+      gap: 32px;
+    }
+    .page__comment .hand {
+      font-size: 32px;
+    }
+    .hw__foot {
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 48px;
+    }
+    .hw__facts {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fix__new,
+    .page__comment .hand {
+      transition: none;
+    }
+  }
+</style>

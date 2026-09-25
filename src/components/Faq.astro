@@ -1,0 +1,151 @@
+---
+import { COURSE, SCHOOL, TEACHER } from '../config/school';
+
+const T = TEACHER.firstName;
+const faq = [
+  {
+    q: 'Як зрозуміти, що в мене B1?',
+    a: `Орієнтир простий: читаєте статті й дивитесь серіали з субтитрами, а говорити важко — це B1. Якщо без перекладача не розумієте навіть простих текстів — це ще A2. Не впевнені — після першого заняття ${T} скаже чесно, і ми або залишимо вас у групі, або повернемо гроші.`,
+  },
+  {
+    q: 'Що буде, якщо пропущу заняття?',
+    a: 'Запис з’явиться в чаті групи того ж вечора. А якщо знаєте заздалегідь — приходьте на те саме заняття в іншу групу цього тижня, коли там є вільне місце.',
+  },
+  {
+    q: 'Можна повернути гроші?',
+    a: `Так. До ${COURSE.refundUntilLesson}-го заняття — всю суму, без пояснень. Пізніше — пропорційно заняттям, що залишились. Гроші приходять на ту саму картку протягом 3 робочих днів.`,
+  },
+  {
+    q: 'Як працює оплата частинами?',
+    a: 'Від школи — два платежі: перший під час бронювання, другий перед 5-м заняттям. Від банку — 4 щомісячні платежі без переплати через «Оплату частинами» ПриватБанку або «Покупку частинами» monobank. Оформлюється на сторінці оплати за 2 хвилини.',
+  },
+  {
+    q: 'Скільки часу треба поза заняттями?',
+    a: 'Близько 15 хвилин на день: голосове до 2 хвилин і 5 нових фраз з заняття. Разом із заняттями — близько 5 годин на тиждень.',
+  },
+  {
+    q: 'Мені незручно говорити при інших',
+    a: `Так мають майже всі на першому занятті. Більшість часу ви говорите в парах, а не перед усією групою. Помилки ${T} розбирає без імен — ніхто не знає, чия це була фраза.`,
+  },
+  {
+    q: 'Чи буде сертифікат?',
+    a: 'Так, PDF-сертифікат про проходження курсу, якщо ви були на 12 заняттях із 16. Це не міжнародний сертифікат — для IELTS чи TOEFL потрібен окремий іспит.',
+  },
+  {
+    q: 'Можна оплатити від компанії або ФОП?',
+    a: `Так. Напишіть у Telegram ${SCHOOL.telegram} назву компанії та ЄДРПОУ — надішлемо рахунок і акт.`,
+  },
+];
+---
+
+<section class="faq section" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div>
+      <p class="eyebrow">Питання</p>
+      <h2 id="faq-title" class="h2">Про що питають перед оплатою</h2>
+      <p class="faq__ask">
+        Не знайшли свого? Напишіть у Telegram <b>{SCHOOL.telegram}</b> — відповідаємо в будні з 10:00 до 20:00.
+      </p>
+    </div>
+
+    <div class="faq__list">
+      {
+        faq.map((f) => (
+          <details class="qa">
+            <summary>
+              <span>{f.q}</span>
+              <span class="qa__icon" aria-hidden="true" />
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__grid {
+    display: grid;
+    gap: 32px;
+  }
+  .faq .eyebrow {
+    margin-bottom: 12px;
+  }
+  .faq__ask {
+    margin-top: 18px;
+    color: var(--ink-2);
+    max-width: 26em;
+  }
+  .faq__list {
+    border-top: 2px solid var(--ink);
+  }
+  .qa {
+    border-bottom: 1px solid var(--line);
+  }
+  .qa summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+    padding-block: 14px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.3;
+    cursor: pointer;
+    list-style: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .qa summary::-webkit-details-marker {
+    display: none;
+  }
+  .qa summary:focus-visible {
+    outline-offset: -3px;
+  }
+  .qa__icon {
+    position: relative;
+    flex: none;
+    width: 28px;
+    height: 28px;
+  }
+  .qa__icon::before,
+  .qa__icon::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    background: var(--ink);
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+  }
+  .qa__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+  .qa[open] .qa__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  .qa[open] .qa__icon::before,
+  .qa[open] .qa__icon::after {
+    background: var(--red);
+  }
+  .qa p {
+    padding-bottom: 20px;
+    color: var(--ink-2);
+    max-width: 38em;
+  }
+
+  @media (min-width: 960px) {
+    .faq__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 64px;
+      align-items: start;
+    }
+    .faq__grid > div:first-child {
+      position: sticky;
+      top: 32px;
+    }
+  }
+</style>

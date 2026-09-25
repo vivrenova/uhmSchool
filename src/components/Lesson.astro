@@ -1,0 +1,151 @@
+---
+import ZoomMock from './mock/ZoomMock.astro';
+import ChatMock from './mock/ChatMock.astro';
+import { COURSE, TEACHER } from '../config/school';
+
+const T = TEACHER.firstName;
+const steps = [
+  { at: '0–10', title: 'Розминка', text: 'Small talk у парах на тему дня. Без підготовки — як у житті.' },
+  { at: '10–25', title: 'Нова конструкція', text: `${T} пояснює на прикладах із вашої роботи й життя — тих, що ви надсилали в голосових.` },
+  { at: '25–60', title: 'Розмова в кімнатах', text: `Пари й трійки в окремих кімнатах Zoom. ${T} заходить у кожну й записує помилки.` },
+  { at: '60–80', title: 'Розбір помилок', text: 'Почуте в кімнатах — на екрані, без імен. Виправляємо разом і повторюємо вголос.' },
+  { at: '80–90', title: 'Завдання', text: 'Тема голосового на завтра і 5 фраз, які варто в ньому вжити.' },
+];
+---
+
+<section class="lesson section" id="lesson" aria-labelledby="lesson-title">
+  <div class="wrap">
+    <div class="lesson__head">
+      <p class="eyebrow">Як проходить заняття</p>
+      <h2 id="lesson-title" class="h2">Два вечори на тиждень у Zoom, по {COURSE.lessonMinutes} хвилин</h2>
+      <p class="lead">
+        Камера увімкнена, мікрофон теж. Лекцій немає: {T} пояснює 15 хвилин, решту часу говорите ви — у парах, трійках і з
+        нею.
+      </p>
+    </div>
+
+    <div class="lesson__grid">
+      <ZoomMock>
+        <figcaption class="lesson__cap">Скрін із заняття, 47-ма хвилина: Андрій розповідає, решта — слухають і ставлять питання.</figcaption>
+      </ZoomMock>
+
+      <ol class="steps">
+        {
+          steps.map((s) => (
+            <li class="step">
+              <span class="step__at tnum">
+                {s.at}
+                <span class="sr-only"> хвилин</span>
+                <span aria-hidden="true"> хв</span>
+              </span>
+              <div>
+                <h3 class="step__title">{s.title}</h3>
+                <p class="step__text">{s.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="lesson__between">
+      <div class="lesson__between-text">
+        <h3 class="h3">Між заняттями — чат групи</h3>
+        <p>
+          Запис кожного заняття й слайди з’являються в чаті того ж вечора. Там само — тема голосового, питання до {TEACHER.firstNameGen}{' '}
+          й перенесення: якщо не встигаєте на своє заняття, можна прийти в іншу групу того ж тижня.
+        </p>
+        <ul class="ticks">
+          <li>запис заняття — до 22:00 того ж дня</li>
+          <li>відповідь {TEACHER.firstNameGen} — у будні з 10:00 до 20:00</li>
+          <li>доступ до записів — ще 3 місяці після курсу</li>
+        </ul>
+      </div>
+      <ChatMock>
+        <figcaption class="lesson__cap">Скрін чату групи в Telegram.</figcaption>
+      </ChatMock>
+    </div>
+  </div>
+</section>
+
+<style>
+  .lesson__head {
+    display: grid;
+    gap: 16px;
+    max-width: 820px;
+    margin-bottom: 40px;
+  }
+  .lesson__head .lead {
+    max-width: 36em;
+  }
+  .lesson__grid {
+    display: grid;
+    gap: 40px;
+  }
+  .lesson__cap {
+    margin-top: 12px;
+    font-size: 16px;
+    color: var(--ink-3);
+  }
+
+  .steps {
+    list-style: none;
+    display: grid;
+    counter-reset: step;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 76px 1fr;
+    gap: 12px;
+    padding-block: 16px;
+    border-top: 1px solid var(--line);
+  }
+  .step:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .step__at {
+    font-weight: 600;
+    color: var(--ink-3);
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+  .step__title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .step__text {
+    color: var(--ink-2);
+  }
+
+  .lesson__between {
+    display: grid;
+    gap: 32px;
+    margin-top: 72px;
+  }
+  .lesson__between-text p {
+    color: var(--ink-2);
+    max-width: 34em;
+  }
+
+  @media (min-width: 960px) {
+    .lesson__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 56px;
+      align-items: start;
+    }
+    .step {
+      grid-template-columns: 84px 1fr;
+    }
+    .lesson__between {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 56px;
+      margin-top: 120px;
+    }
+    .lesson__between :global(.chat__phone) {
+      margin-inline: auto;
+    }
+  }
+</style>

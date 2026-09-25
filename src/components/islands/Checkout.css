@@ -1,0 +1,139 @@
+.co {
+  display: grid;
+  gap: 28px;
+}
+.co__summary {
+  padding: 18px 16px;
+}
+.co__course {
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  margin-bottom: 12px;
+}
+.co__facts {
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.co__facts div,
+.co__bill div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+.co__facts dt {
+  color: var(--ink-3);
+}
+.co__facts dd,
+.co__bill dd {
+  margin: 0;
+  text-align: right;
+  font-weight: 600;
+}
+.co__bill {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  display: grid;
+  gap: 6px;
+}
+.co__bill dt {
+  color: var(--ink-2);
+}
+.co__discount dd {
+  color: var(--red);
+}
+.co__total {
+  padding-top: 8px;
+  margin-top: 4px;
+  border-top: 1px solid var(--line);
+  align-items: baseline;
+}
+.co__total dt {
+  font-weight: 600;
+  color: var(--ink) !important;
+}
+.co__total dd {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+}
+.co__later dt,
+.co__later dd {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+.co__timer,
+.co__refund {
+  margin-top: 12px;
+  font-size: 16px;
+  color: var(--ink-2);
+}
+.co__timer .countdown {
+  font-weight: 600;
+  color: var(--ink);
+}
+.co__refund {
+  margin-top: 6px;
+  color: var(--ink-3);
+}
+
+.co__form {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+}
+.co__block {
+  margin: 0;
+}
+.co__contacts {
+  border: 0;
+  padding: 0;
+  min-width: 0;
+  display: grid;
+  gap: 18px;
+}
+.co__legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 18px;
+}
+.co__pay {
+  margin-top: 4px;
+}
+.co__legal {
+  font-size: 16px;
+  color: var(--ink-3);
+  margin-top: -8px;
+}
+.co__full {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 14px;
+  background: var(--paper-2);
+}
+.co__full .btn {
+  justify-self: start;
+}
+
+@media (min-width: 960px) {
+  .co {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    gap: 56px;
+    align-items: start;
+  }
+  .co__summary {
+    order: 2;
+    position: sticky;
+    top: 24px;
+    padding: 24px;
+  }
+  .co__form {
+    order: 1;
+    max-width: 580px;
+  }
+}

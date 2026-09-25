@@ -1,0 +1,255 @@
+---
+// «Скрін» заняття в Zoom, зверстаний у HTML: чіткий на будь-якому екрані й легкий.
+// Для читачів екрана — один опис замість десятка дрібних підписів.
+import { Image } from 'astro:assets';
+import teacher from '../../assets/photos/teacher-mug.jpg';
+import andrii from '../../assets/photos/zoom-andrii.jpg';
+import marta from '../../assets/photos/zoom-marta.jpg';
+import denys from '../../assets/photos/zoom-denys.jpg';
+import ira from '../../assets/photos/zoom-ira.jpg';
+import { TEACHER } from '../../config/school';
+
+const tiles = [
+  { name: `${TEACHER.firstName} ${TEACHER.lastName}`, img: teacher, pos: '52% 30%', host: true, muted: true },
+  { name: 'Андрій', img: andrii, pos: '50% 30%', speaking: true },
+  { name: 'Марта', img: marta, pos: '50% 35%', muted: true },
+  { name: 'Денис', img: denys, pos: '50% 30%', muted: true },
+  { name: 'Іра', img: ira, pos: '42% 30%', muted: true },
+  { name: 'Олена К.', initials: 'ОК', muted: true },
+];
+---
+
+<figure class="zoom" role="img" aria-label="Скрін заняття в Zoom: шість учасників з увімкненими камерами, говорить Андрій, заняття записується.">
+  <div class="zoom__win" aria-hidden="true">
+    <div class="zoom__top">
+      <span class="zoom__dots"><i></i><i></i><i></i></span>
+      <span class="zoom__title">uhm. · Speaking B1 · Вт/Чт</span>
+      <span class="zoom__rec"><i></i>REC 00:47:12</span>
+    </div>
+
+    <div class="zoom__grid">
+      {
+        tiles.map((t) => (
+          <div class:list={['zoom__tile', { 'is-speaking': t.speaking }]}>
+            {t.img ? (
+              <Image
+                src={t.img}
+                alt=""
+                widths={[200, 320, 480]}
+                sizes="(min-width: 900px) 240px, 45vw"
+                loading="lazy"
+                format="webp"
+                quality={62}
+                style={`object-position:${t.pos}`}
+              />
+            ) : (
+              <span class="zoom__avatar">{t.initials}</span>
+            )}
+            <span class="zoom__name">
+              {t.muted && (
+                <svg viewBox="0 0 16 16" width="12" height="12">
+                  <path d="M8 2a2 2 0 0 1 2 2v3M6 6v1a2 2 0 0 0 3.4 1.4M4 7a4 4 0 0 0 6.3 3.3M12 7a4 4 0 0 1-.4 1.7M8 11v3M2 2l12 12" />
+                </svg>
+              )}
+              {t.name}
+              {t.host && <em>організатор</em>}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="zoom__bar">
+      <span><svg viewBox="0 0 20 20"><path d="M10 3a2.5 2.5 0 0 1 2.5 2.5v4a2.5 2.5 0 0 1-5 0v-4A2.5 2.5 0 0 1 10 3zM5 9.5a5 5 0 0 0 10 0M10 14.5V17" /></svg><b>Звук</b></span>
+      <span><svg viewBox="0 0 20 20"><path d="M3 6h9v8H3zM12 9l5-3v8l-5-3" /></svg><b>Відео</b></span>
+      <span class="zoom__mid"><svg viewBox="0 0 20 20"><path d="M7 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM2.5 16a4.5 4.5 0 0 1 9 0M13.5 9a2 2 0 1 0 0-4M14 16h3.5a3.5 3.5 0 0 0-3.5-3.5" /></svg><b>Учасники 6</b></span>
+      <span class="zoom__mid"><svg viewBox="0 0 20 20"><path d="M3 4h14v9H8l-4 3v-3H3z" /></svg><b>Чат</b></span>
+      <span class="zoom__mid is-accent"><svg viewBox="0 0 20 20"><path d="M3 3h6v6H3zM11 3h6v6h-6zM3 11h6v6H3zM11 11h6v6h-6z" /></svg><b>Кімнати</b></span>
+      <span class="zoom__leave">Вийти</span>
+    </div>
+  </div>
+  <slot />
+</figure>
+
+<style>
+  .zoom {
+    margin: 0;
+  }
+  .zoom__win {
+    --z-bg: #1b1b1d;
+    --z-tile: #2a2a2d;
+    --z-text: #e9e9ec;
+    background: var(--z-bg);
+    color: var(--z-text);
+    border-radius: 14px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 12px;
+    line-height: 1.2;
+    box-shadow: 0 18px 40px -18px rgba(24, 23, 21, 0.45);
+  }
+  .zoom__top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: #111113;
+  }
+  .zoom__dots {
+    display: inline-flex;
+    gap: 5px;
+  }
+  .zoom__dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4a4a4f;
+  }
+  .zoom__title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #b9b9c0;
+  }
+  .zoom__rec {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-variant-numeric: tabular-nums;
+    color: #b9b9c0;
+  }
+  .zoom__rec i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ff4d4f;
+  }
+
+  .zoom__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    padding: 4px;
+  }
+  .zoom__tile {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--z-tile);
+    display: grid;
+    place-items: center;
+  }
+  .zoom__tile :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .zoom__tile.is-speaking::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 3px solid #f5d547;
+    border-radius: 6px;
+  }
+  .zoom__avatar {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #6d5b8f;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .zoom__name {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    max-width: calc(100% - 10px);
+    padding: 3px 6px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.6);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .zoom__name em {
+    font-style: normal;
+    color: #a9a9b0;
+  }
+  .zoom__name svg {
+    flex: none;
+    fill: none;
+    stroke: #ff6b6b;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .zoom__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 8px 12px 10px;
+    background: #111113;
+  }
+  .zoom__bar > span {
+    display: grid;
+    justify-items: center;
+    gap: 3px;
+    color: #cfcfd6;
+  }
+  .zoom__bar svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .zoom__bar b {
+    font-weight: 400;
+    font-size: 11px;
+  }
+  .zoom__bar .is-accent {
+    color: #7fb2ff;
+  }
+  .zoom__bar .zoom__mid {
+    display: none;
+  }
+  .zoom__leave {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #d93b3b;
+    color: #fff !important;
+    font-weight: 600;
+  }
+
+  @media (min-width: 560px) {
+    .zoom__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .zoom__bar .zoom__mid {
+      display: grid;
+    }
+  }
+  @media (min-width: 900px) {
+    .zoom__win {
+      font-size: 13px;
+      border-radius: 18px;
+    }
+    .zoom__grid {
+      gap: 6px;
+      padding: 6px;
+    }
+  }
+</style>

@@ -1,0 +1,135 @@
+.mail {
+  display: grid;
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.mail--loading {
+  min-height: 80dvh;
+}
+.mail__demo {
+  justify-self: start;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: var(--marker);
+  font-size: 16px;
+  font-weight: 600;
+}
+.mail__client {
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.mail__head {
+  padding: 18px 16px 14px;
+  border-bottom: 1px solid #ecebe7;
+}
+.mail__subject {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+}
+.mail__from {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-size: 15px;
+}
+.mail__ava {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 800;
+}
+.mail__addr,
+.mail__to {
+  color: #66665f;
+  word-break: break-all;
+}
+
+/* Сам лист — простий, як HTML-лист, що не розвалюється в Gmail. */
+.letter {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 28px 18px 32px;
+  font-family: var(--font-text);
+  color: #1d1c1a;
+  display: grid;
+  gap: 14px;
+}
+.letter__logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.04em;
+}
+.letter__logo span {
+  color: var(--red);
+}
+.letter__h {
+  font-size: 28px;
+}
+.letter__btn {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 600;
+  text-decoration: none;
+}
+.letter__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+.letter__table th,
+.letter__table td {
+  padding: 8px 0;
+  border-bottom: 1px solid #ecebe7;
+  text-align: left;
+  vertical-align: top;
+}
+.letter__table th {
+  width: 40%;
+  font-weight: 400;
+  color: #66665f;
+}
+.letter__h3 {
+  font-size: 20px;
+  margin-top: 8px;
+}
+.letter__list {
+  padding-left: 22px;
+  display: grid;
+  gap: 6px;
+}
+.letter__muted {
+  font-size: 16px;
+  color: #66665f;
+}
+.mail > .btn {
+  justify-self: start;
+}
+
+@media (min-width: 720px) {
+  .mail__head {
+    padding: 22px 28px 16px;
+  }
+  .letter {
+    padding: 36px 28px 40px;
+  }
+}

@@ -1,0 +1,45 @@
+.pcard {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 20px;
+  padding: 22px 16px;
+}
+.pcard__groups {
+  margin-bottom: 18px;
+}
+.pcard__start {
+  color: #cfc8bb;
+  margin-bottom: 18px;
+}
+.pcard__start b {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.pcard__price {
+  margin-top: 18px;
+  color: #cfc8bb;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.pcard__price .tnum,
+.pcard__price .countdown {
+  color: var(--paper);
+  font-weight: 600;
+}
+
+.pcard__cta {
+  margin-top: 18px;
+}
+.pcard__small {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #b9b2a6;
+}
+
+@media (min-width: 720px) {
+  .pcard {
+    padding: 36px;
+    border-radius: 24px;
+  }
+}

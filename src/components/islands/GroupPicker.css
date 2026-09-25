@@ -1,0 +1,137 @@
+/* Вибір групи: чипи-радіокнопки. */
+
+.groups {
+  border: 0;
+  margin-inline: 0;
+  margin-top: 0;
+  padding: 0;
+  min-width: 0;
+}
+.groups__legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink-3);
+}
+.groups__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.chip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 60px;
+  padding: 8px 10px;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease;
+}
+.chip input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.chip:hover {
+  border-color: var(--ink-3);
+}
+.chip:has(input:checked) {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.chip:has(input:focus-visible) {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+.chip__main {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.chip__sub {
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--ink-3);
+}
+.chip:has(input:checked) .chip__sub {
+  color: #cfc8bb;
+}
+.chip--full .chip__sub {
+  color: var(--red);
+}
+.chip--full:has(input:checked) .chip__sub {
+  color: var(--red-on-ink);
+}
+
+/* На темній картці цін */
+.groups--ink .groups__legend {
+  color: #b9b2a6;
+}
+.groups--ink .chip {
+  background: transparent;
+  border-color: #4a463f;
+  color: var(--paper);
+}
+.groups--ink .chip:hover {
+  border-color: #8a8378;
+}
+.groups--ink .chip__sub {
+  color: #b9b2a6;
+}
+.groups--ink .chip:has(input:checked) {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+.groups--ink .chip:has(input:checked) .chip__sub {
+  color: var(--ink-3);
+}
+.groups--ink .chip--full .chip__sub {
+  color: var(--red-on-ink);
+}
+.groups--ink .chip--full:has(input:checked) .chip__sub {
+  color: var(--red);
+}
+.groups--ink .chip:has(input:focus-visible) {
+  outline-color: var(--paper);
+}
+
+/* Групи рядками — для вузької картки цін */
+.groups--rows .groups__list {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+.groups--rows .chip {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 48px;
+  padding: 8px 14px;
+}
+@media (min-width: 720px) {
+  .groups--rows .groups__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .groups--rows .chip {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    min-height: 60px;
+    padding: 8px 10px;
+  }
+}

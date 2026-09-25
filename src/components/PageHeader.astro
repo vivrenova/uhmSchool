@@ -1,0 +1,62 @@
+---
+// Шапка внутрішніх сторінок: логотип і одна дія праворуч.
+import Logo from './Logo.astro';
+
+interface Props {
+  backHref?: string;
+  backLabel?: string;
+  right?: string;
+}
+const { backHref = '/', backLabel = 'До курсу', right } = Astro.props;
+---
+
+<header class="ph">
+  <div class="wrap ph__inner">
+    <Logo />
+    {
+      right ? (
+        <span class="ph__right">{right}</span>
+      ) : (
+        <a class="ph__back" href={backHref}>
+          <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+            <path d="M10 3L5 8l5 5" />
+          </svg>
+          {backLabel}
+        </a>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .ph__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: var(--header-h);
+    padding-block: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ph__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding-inline: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--ink-2);
+  }
+  .ph__back svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .ph__right {
+    color: var(--ink-3);
+    font-size: 16px;
+  }
+</style>
