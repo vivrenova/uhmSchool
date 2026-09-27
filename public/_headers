@@ -1,0 +1,7 @@
+# Cloudflare Workers static assets: кешування.
+# Скрипти, стилі й картинки з хешем у назві та шрифти не змінюються — кешуємо на рік.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

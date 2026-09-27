@@ -265,3 +265,31 @@ export function methodText(p: Pick<Payment, 'method' | 'cardLast4'>): string {
 export function planTitle(id: PlanId): string {
   return PLANS.find((p) => p.id === id)?.title ?? id;
 }
+
+// ——— Приклад для сторінок після оплати ———
+// Якщо «Оплату отримано» чи «Лист учню» відкрили без оплати (з футера), показуємо зразок.
+
+export function samplePayment(sch: Schedule, realNow: number): Payment {
+  const a = planAmounts('full', true);
+  return {
+    id: 'UHM-00000',
+    createdAt: realNow - 3 * 60_000,
+    email: 'olena@example.com',
+    phone: '671234567',
+    groupId: 'tt-1930',
+    cohortKey: sch.cohortKey,
+    plan: 'full',
+    amount: a.now,
+    total: a.total,
+    early: true,
+    method: 'apple',
+  };
+}
+
+/** Оплата для показу: за номером замовлення → остання з цього браузера → зразок. */
+export function paymentToShow(s: DemoState, sch: Schedule, orderId: string | null, realNow: number) {
+  const found = orderId ? s.payments.find((p) => p.id === orderId) : undefined;
+  const latest = [...s.payments].reverse().find((p) => p.cohortKey === sch.cohortKey);
+  const payment = found ?? latest ?? samplePayment(sch, realNow);
+  return { payment, isSample: !found && !latest };
+}

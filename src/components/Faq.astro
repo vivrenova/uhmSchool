@@ -1,5 +1,5 @@
 ---
-import { COURSE, SCHOOL, TEACHER } from '../config/school';
+import { COURSE, TEACHER } from '../config/school';
 
 const T = TEACHER.firstName;
 const faq = [
@@ -33,7 +33,7 @@ const faq = [
   },
   {
     q: 'Можна оплатити від компанії або ФОП?',
-    a: `Так. Напишіть у Telegram ${SCHOOL.telegram} назву компанії та ЄДРПОУ — надішлемо рахунок і акт.`,
+    a: 'Так. Після бронювання дайте відповідь на лист із назвою компанії та ЄДРПОУ — надішлемо рахунок і акт.',
   },
 ];
 ---
@@ -43,9 +43,6 @@ const faq = [
     <div>
       <p class="eyebrow">Питання</p>
       <h2 id="faq-title" class="h2">Про що питають перед оплатою</h2>
-      <p class="faq__ask">
-        Не знайшли свого? Напишіть у Telegram <b>{SCHOOL.telegram}</b> — відповідаємо в будні з 10:00 до 20:00.
-      </p>
     </div>
 
     <div class="faq__list">
@@ -71,11 +68,6 @@ const faq = [
   }
   .faq .eyebrow {
     margin-bottom: 12px;
-  }
-  .faq__ask {
-    margin-top: 18px;
-    color: var(--ink-2);
-    max-width: 26em;
   }
   .faq__list {
     border-top: 2px solid var(--ink);

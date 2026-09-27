@@ -113,17 +113,25 @@
 }
 .dp__links {
   list-style: none;
-  display: grid;
-  gap: 4px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 .dp__links a {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
-  font-weight: 600;
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--card);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--ink);
 }
-.dp__links span {
-  color: var(--ink-3);
+.dp__links a:hover {
+  border-color: var(--ink-3);
 }
 .dp__small {
   font-size: 16px;

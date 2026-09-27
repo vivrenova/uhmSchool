@@ -4,8 +4,6 @@
 export const SCHOOL = {
   name: 'uhm.',
   tagline: 'школа розмовної англійської',
-  email: 'hello@uhm.school',
-  telegram: '@uhm_school',
   timeZone: 'Europe/Kyiv',
 } as const;
 

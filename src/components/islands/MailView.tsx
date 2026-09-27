@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { COURSE, SCHOOL, TEACHER } from '../../config/school';
 import { useClock, useDemo } from '../../lib/hooks';
-import { fmtDateTime, methodText, planTitle } from '../../lib/orders';
+import { fmtDateTime, methodText, paymentToShow, planTitle } from '../../lib/orders';
 import { planAmounts, uah } from '../../lib/pricing';
 import { addDays, dayMonth, getGroup, groupStart, wdLongDayMonth } from '../../lib/schedule';
 import './MailView.css';
@@ -9,7 +9,7 @@ import './MailView.css';
 /** Лист, який отримує учень після оплати, — у вигляді поштового клієнта. */
 export default function MailView({ ssrNow }: { ssrNow: number }) {
   const demo = useDemo();
-  const { schedule } = useClock(ssrNow, demo);
+  const { real, schedule } = useClock(ssrNow, demo);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -18,17 +18,7 @@ export default function MailView({ ssrNow }: { ssrNow: number }) {
   }, []);
   if (!ready) return <div class="mail mail--loading" aria-busy="true" />;
 
-  const p = demo.payments.find((x) => x.id === orderId) ?? demo.payments[demo.payments.length - 1];
-  if (!p) {
-    return (
-      <div class="mail">
-        <p>Лист з’явиться після тестової оплати.</p>
-        <a class="btn" href="/checkout">
-          Забронювати місце
-        </a>
-      </div>
-    );
-  }
+  const { payment: p, isSample } = paymentToShow(demo, schedule, orderId, real);
 
   const g = getGroup(p.groupId);
   const start = groupStart(schedule, g);
@@ -36,7 +26,15 @@ export default function MailView({ ssrNow }: { ssrNow: number }) {
 
   return (
     <div class="mail">
-      <p class="mail__demo">Демо: так виглядає лист, який приходить учню одразу після оплати</p>
+      <p class="mail__demo">
+        Демо: так виглядає лист, який приходить учню одразу після оплати.
+        {isSample && (
+          <>
+            {' '}
+            Це приклад — <a href="/checkout">після тестової оплати</a> тут буде ваш лист.
+          </>
+        )}
+      </p>
 
       <article class="mail__client" aria-labelledby="mail-subject">
         <header class="mail__head">
@@ -49,7 +47,7 @@ export default function MailView({ ssrNow }: { ssrNow: number }) {
             </span>
             <div>
               <p>
-                <b>{SCHOOL.name}</b> <span class="mail__addr">&lt;{SCHOOL.email}&gt;</span>
+                <b>{SCHOOL.name}</b>
               </p>
               <p class="mail__to">
                 кому: {p.email} · <span class="tnum">{fmtDateTime(p.createdAt)}</span>
@@ -112,12 +110,10 @@ export default function MailView({ ssrNow }: { ssrNow: number }) {
           </ol>
 
           <p class="letter__muted">
-            Передумали? До {COURSE.refundUntilLesson}-го заняття повертаємо всю суму — просто дайте відповідь на цей лист.
+            Питання чи передумали? Просто дайте відповідь на цей лист. До {COURSE.refundUntilLesson}-го заняття повертаємо
+            всю суму.
           </p>
-          <p class="letter__muted">
-            Питання — у Telegram {SCHOOL.telegram}, у будні з 10:00 до 20:00.
-            <br />— {TEACHER.firstName} і команда {SCHOOL.name}
-          </p>
+          <p class="letter__muted">— {TEACHER.firstName} і команда {SCHOOL.name}</p>
         </div>
       </article>
 

@@ -7,6 +7,14 @@
 .ok--loading {
   min-height: 80dvh;
 }
+.ok__sample {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--marker);
+}
+.ok__sample a {
+  font-weight: 600;
+}
 .ok__hero {
   display: grid;
   gap: 6px;

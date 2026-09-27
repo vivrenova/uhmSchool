@@ -27,7 +27,7 @@ function icsFile(start: CivilDate, time: string, title: string): string {
     const to = from + COURSE.lessonMinutes * 60_000;
     return [
       'BEGIN:VEVENT',
-      `UID:uhm-${d}-${i}@uhm.school`,
+      `UID:uhm-${d}-${i}@${location.hostname}`,
       `DTSTAMP:${stamp(Date.now())}`,
       `DTSTART:${stamp(from)}`,
       `DTEND:${stamp(to)}`,
@@ -186,7 +186,7 @@ export default function Learn({ ssrNow }: { ssrNow: number }) {
         ) : (
           <p class="learn__muted">Тут з’являться ваші платежі й чеки.</p>
         )}
-        <p class="learn__muted">Питання — Telegram {SCHOOL.telegram}</p>
+        <p class="learn__muted">Питання — у чаті групи або у відповідь на лист після оплати.</p>
       </section>
     </div>
   );

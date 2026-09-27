@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import DemoBanner from '../components/DemoBanner.astro';
 import DemoPanel from '../components/islands/DemoPanel';
+import Footer from '../components/Footer.astro';
 import { SCHOOL } from '../config/school';
 
 interface Props {
@@ -10,7 +11,7 @@ interface Props {
   /** Сторінки кабінетів і чекауту не індексуємо. */
   noindex?: boolean;
   bodyClass?: string;
-  /** Сторінка «два екрани»: без демо-панелі (вона є в кожному з вікон). */
+  /** Сторінка «два екрани»: без демо-панелі й футера (вони є в кожному з вікон). */
   bare?: boolean;
 }
 
@@ -45,5 +46,6 @@ const ssrNow = Date.now();
       )
     }
     <slot />
+    {!bare && <Footer />}
   </body>
 </html>

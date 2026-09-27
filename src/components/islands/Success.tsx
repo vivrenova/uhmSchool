@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks';
 import { COURSE } from '../../config/school';
 import { useClock, useDemo } from '../../lib/hooks';
-import { fmtDateTime, methodText, planTitle } from '../../lib/orders';
+import { fmtDateTime, methodText, paymentToShow, planTitle } from '../../lib/orders';
 import { planAmounts, uah } from '../../lib/pricing';
 import { addDays, dayMonth, getGroup, groupStart, wdLongDayMonth } from '../../lib/schedule';
 import { seatsFor, type Notice } from '../../lib/store';
@@ -11,7 +11,7 @@ import './Success.css';
 
 export default function Success({ ssrNow }: { ssrNow: number }) {
   const demo = useDemo();
-  const { schedule } = useClock(ssrNow, demo);
+  const { real, schedule } = useClock(ssrNow, demo);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [ready, setReady] = useState(false);
 
@@ -22,18 +22,7 @@ export default function Success({ ssrNow }: { ssrNow: number }) {
 
   if (!ready) return <div class="ok ok--loading" aria-busy="true" />;
 
-  const p = demo.payments.find((x) => x.id === orderId);
-  if (!p) {
-    return (
-      <div class="ok">
-        <h1 class="ok__h">Замовлення не знайдено</h1>
-        <p class="ok__lead">Схоже, демо-дані скинуто або посилання неповне.</p>
-        <a class="btn" href="/">
-          До курсу
-        </a>
-      </div>
-    );
-  }
+  const { payment: p, isSample } = paymentToShow(demo, schedule, orderId, real);
 
   const group = getGroup(p.groupId);
   const start = groupStart(schedule, group);
@@ -45,6 +34,12 @@ export default function Success({ ssrNow }: { ssrNow: number }) {
 
   return (
     <div class="ok">
+      {isSample && (
+        <p class="ok__sample">
+          Приклад сторінки: так її бачить учень одразу після оплати. <a href="/checkout">Оплатіть тестовою карткою</a> — і
+          тут будуть ваші дані.
+        </p>
+      )}
       <div class="ok__hero">
         <svg class="ok__tick" viewBox="0 0 64 48" aria-hidden="true">
           <path d="M4 26 C 12 30, 18 38, 22 44 C 30 28, 44 12, 60 4" />

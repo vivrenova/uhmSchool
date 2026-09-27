@@ -1,6 +1,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { GROUPS, type GroupId } from '../../config/school';
 import { AUTHOR } from '../../config/author';
+import { DEMO_PAGES } from '../../config/demoPages';
 import { useClock, useDemo, useSelectedGroup } from '../../lib/hooks';
 import { setFreeSeats, setTimeOffset } from '../../lib/orders';
 import { getGroup } from '../../lib/schedule';
@@ -25,11 +26,6 @@ export default function DemoPanel({ ssrNow }: { ssrNow: number }) {
     setTimeout(() => setDone(null), 2500);
   }
 
-  const links = [
-    { href: '/admin', label: 'Кабінет власника', note: 'оплати, лист очікування, бот' },
-    { href: '/demo', label: 'Два екрани', note: 'учень і власник поруч (на комп’ютері)' },
-    { href: '/learn', label: 'Кабінет учня', note: 'куди веде лист після оплати' },
-  ];
   const author = [
     AUTHOR.telegram && { href: `https://t.me/${AUTHOR.telegram}`, label: 'Telegram' },
     AUTHOR.email && { href: `mailto:${AUTHOR.email}`, label: 'Пошта' },
@@ -135,11 +131,11 @@ export default function DemoPanel({ ssrNow }: { ssrNow: number }) {
           </section>
 
           <section class="dp__sec" aria-labelledby="dp-see">
-            <h3 id="dp-see">Подивитися</h3>
+            <h3 id="dp-see">Сторінки демо</h3>
             <ul class="dp__links">
-              {links.map((l) => (
+              {DEMO_PAGES.map((l) => (
                 <li key={l.href}>
-                  <a href={l.href}>{l.label}</a> <span>— {l.note}</span>
+                  <a href={l.href}>{l.label}</a>
                 </li>
               ))}
             </ul>
@@ -171,9 +167,9 @@ export default function DemoPanel({ ssrNow }: { ssrNow: number }) {
             <p class="dp__small">Усе зберігається лише у вашому браузері — інші відвідувачі цього не бачать.</p>
           </section>
 
-          {(AUTHOR.label || author.length > 0) && (
+          {author.length > 0 && (
             <p class="dp__author">
-              {AUTHOR.label}
+              <span>{AUTHOR.label}</span>
               {author.map((a) => (
                 <a key={a.href} href={a.href} target="_blank" rel="noopener">
                   {a.label}
