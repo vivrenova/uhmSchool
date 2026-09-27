@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Pen from '../components/Pen';
+import { SCHOOL } from '../config/school';
+---
+
+<Base title={`Сторінку не знайдено — ${SCHOOL.name}`} noindex>
+  <PageHeader />
+  <main class="wrap nf">
+    <p class="nf__code" aria-hidden="true">
+      <Pen kind="strike" draw="intro">404</Pen>
+    </p>
+    <h1 class="nf__title">Такої сторінки немає</h1>
+    <p class="lead">Можливо, посилання застаріло або в ньому одрук. Курс, розклад і ціни — на головній.</p>
+    <a class="btn" href="/">До курсу</a>
+  </main>
+</Base>
+
+<style>
+  .nf {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+    padding-block: 48px 96px;
+  }
+  .nf__code {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(88px, 22vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--ink-3);
+  }
+  .nf__title {
+    font-size: clamp(34px, 8vw, 56px);
+  }
+  .nf .lead {
+    max-width: 32em;
+  }
+</style>

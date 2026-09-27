@@ -1,0 +1,12 @@
+// Деплой на Cloudflare Workers як статичний сайт (без серверного коду).
+// name має збігатися з назвою проєкту в панелі Cloudflare — Workers Builds їх звіряє.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "uhmschool",
+  "compatibility_date": "2026-09-26",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  }
+}

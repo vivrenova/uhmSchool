@@ -48,11 +48,13 @@ npm run check      # перевірка типів
 
 Допоміжні скрипти для скрінів: `scripts/shots.mjs`, `scripts/states.mjs`, `scripts/flow-shots.mjs`, `scripts/overflow.mjs`.
 
-## Деплой на Cloudflare Pages
+## Деплой на Cloudflare
 
-1. Залити репозиторій на GitHub.
-2. Cloudflare → Workers & Pages → Create → Pages → Connect to Git → обрати репозиторій.
-3. Build command: `npm run build`, output directory: `dist`, змінна `NODE_VERSION` = `22`.
+Сайт викладається як статичний Worker: конфіг у `wrangler.jsonc` (папка `dist`, сторінка 404), версія Node — у `.node-version`.
+
+1. Cloudflare → Workers & Pages → Create → Import a repository → `vivrenova/uhmSchool`.
+2. Project name: `uhmschool` — має збігатися з `name` у `wrangler.jsonc`.
+3. Build command: `npm run build`, deploy command: `npx wrangler deploy` (стоять за замовчуванням).
 4. Після першого деплою вписати адресу в `site` у `astro.config.mjs`.
 
-Кожна гілка отримає своє превʼю-посилання — зручно показувати клієнтам варіанти.
+Кожен пуш у `main` викладається автоматично, інші гілки отримують превʼю-посилання — зручно показувати клієнтам варіанти.

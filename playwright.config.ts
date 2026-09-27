@@ -21,7 +21,8 @@ export default defineConfig({
   ],
   // Тестуємо продакшн-збірку (npm test спершу збирає сайт): швидкість гідратації — як у відвідувачів.
   webServer: {
-    command: 'npm run preview -- --port 4322',
+    // Напряму через node, без обгортки npm: інакше на Windows Playwright не може закрити сервер і зависає.
+    command: 'node ./node_modules/astro/bin/astro.mjs preview --port 4322',
     url: 'http://localhost:4322',
     reuseExistingServer: !process.env.CI,
     timeout: 180_000,
